@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attendance Dashboard | By Code Info</title>
+  <link rel="stylesheet" href="account.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li><a href="#" class="logo">
+          <img src="bank_icon.png">
+          <span class="nav-item">BANK SYSTEM</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-sign-in-alt"></i>
+
+          <span class="nav-item" onclick="myFunc1()">Home</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-hourglass-half"></i>
+          <span class="nav-item">View plans</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-user-plus"></i>
+
+          <span class="nav-item" onclick="myFunc2()">Register</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-money-bill"></i>
+          <span class="nav-item">Withdraw</span>
+        </a></li>
+        <li><a href="#">
+          <i class="fas fa-cog"></i>
+          <span class="nav-item">Settings</span>
+        </a></li>
+
+        <li><a href="#" class="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="nav-item">Log out</span>
+        </a></li>
+      </ul>
+    </nav>
+
+
+    <section class="main">
+      <div class="main-top">
+        <h1>Your Account Page</h1>
+      </div>
+      <div class="users">
+        <div class="card">
+          <img src="savings.png">
+          <h4>Create Savings Account</h4>
+          <p>We provide interest rate at the following percentages</p>
+          <div class="per">
+            <table>
+            <tr>
+                <td><span>3%</span></td>
+                <td><span>6%</span></td>
+            </tr>
+              <tr>
+                <td>1 Month</td>
+                <td>1 Year</td>
+              </tr>
+            </table>
+          </div>
+          <button onclick="myFunc3()">Process</button>
+        </div>
+        <div class="card">
+          <img src="deposits.png">
+          <h4>Create Deposits Account</h4>
+          <p>We provide interest rate at the following percentages</p>
+          <div class="per">
+            <table>
+              <tr>
+                <td><span>10%</span></td>
+                <td><span>14%</span></td>
+              </tr>
+              <tr>
+                <td>1 Year</td>
+                <td>5 Years</td>
+              </tr>
+            </table>
+          </div>
+          <button>Process</button>
+        </div>
+        <div class="card">
+          <img src="acc_status.png">
+          <h4>View Account status</h4>
+          <br>
+          <p>view you savings and deposits account details</p>
+          <br>
+          <button>Process</button>
+        </div>
+        <div class="card">
+          <img src="trans.png">
+          <h4>Send Money</h4>
+          <br>
+          <p>make transactions to the receiver account you want</p>
+          <br>
+          <button>Process</button>
+        </div>
+      </div>
+
+      <section class="attendance">
+        <div class="transaction-list">
+          <h1>Transactions List</h1>
+          <table class="table">
+            <thead>
+              <!-- <tr>
+                <th>Account_ID</th>
+                <th>Acc_Holder_name_sender</th>
+                <th>Acc_no_sender</th>
+                <th>Date</th>
+                <th>Acc_Holder_name_receiver</th>
+                <th>Acc_no_receiver</th>
+                <th>Amount</th>
+              </tr> -->
+              <th>Name</th>
+              <th>email</th>
+              <th>Acc id</th>
+              <th>Acc no</th>
+            </thead>
+            <tbody id="tblbody">
+              <!-- <tr>
+                <td>123456</td>
+                <td>Swadhesh</td>
+                <td>2342 3458 1232</td>
+                <td>24-4-23</td>
+                <td>Balachandar</td>
+                <td>2349 2321 9834 2310</td>
+                <td><button>View</button></td>
+              </tr>
+              <tr>
+                <td>123457</td>
+                <td>Balachandar</td>
+                <td>2349 2321 9834 2310</td>
+                <td>24-4-23</td>
+                <td>Swadhesh</td>
+                <td>2342 3458 1232</td>
+                <td><button>View</button></td>
+              </tr>
+               -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </div>
+  <!-- acc_id	acc_num name email -->
+
+  <script>
+
+    function myFunc1(){
+      window.location="index.html"
+    }
+    function myFunc2(){
+      window.location="register.html"
+    }
+    function myFunc3(){
+      window.location="Create_sav.html"
+    }
+    const tblbody = document.getElementById("tblbody");
+
+    function tr_(obj){
+
+        const tr = document.createElement("tr");
+
+        const { accId, accNum, name, email } = obj;
+       
+        const acc_id_td = document.createElement("td");
+        acc_id_td.innerHTML = accId;
+
+        const acc_num_td = document.createElement("td");
+        acc_num_td.innerHTML = accNum;
+
+        const name_td = document.createElement("td");
+        name_td.innerHTML = name;
+
+        const email_td = document.createElement("td");
+        email_td.innerHTML = email;
+
+        tr.append(name_td);
+        tr.append(email_td);
+        tr.append(acc_id_td);
+        tr.append(acc_num_td);
+
+        return tr;
+    }
+
+    async function loadDetails(){
+        const fetchResult = await fetch("http://localhost:5600/getUserDetails");
+        const jsonResult = await fetchResult.json();
+
+        console.log(jsonResult);
+
+        tblbody.innerHTML = "";
+
+        for (let i = 0; i < jsonResult.length; i++) {
+            tblbody.append(tr_(jsonResult[i]));
+        }
+
+    }
+
+    loadDetails();
+
+  </script>
+
+</body>
+</html>

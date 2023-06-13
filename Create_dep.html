@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Deposit account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Create Deposit account</h2><br><br>
+    <form>
+        <label for="acc_id">Account id:</label>
+        <input type="number" name="acc_id" id="acc_id"><br><br>
+        <label for="pan">PAN Number:</label>
+        <input type="text" id="pan" name="pan"><br>
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" name="mobile">
+        <button type="submit">Send OTP</button><br><br>
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp"><br><br><br><br>
+
+        <button type="submit">CREATE</button>
+    </form>
+    <script>
+        function validateAccountID(acc_id){
+            const regex=/[0-9]{6}/;
+            return regex.test(acc_id);
+        }
+        function validatePAN(pan) {
+            const regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+            return regex.test(pan);
+        }
+        const form =document.querySelector('form');
+        const acc_id_inp=document.querySelector('#acc_id')
+        const panInput = document.querySelector('#pan');
+        form.addEventListener('submit',function(event){
+            event.preventDefault();
+            const panValue = panInput.value;
+            const acc_val=acc_id_inp.value;
+            if(!validateAccountID(acc_val)){
+                alert('Please enter valid account ID');
+                return;
+            }
+            if (!validatePAN(panValue)) {
+                alert('Please enter a valid PAN number.');
+                return;
+            }
+            this.submit();
+        });
+    </script>
+</body>
+</html>

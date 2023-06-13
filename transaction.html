@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Savings account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Make transaction with Another account</h2><br><br>
+    <form method="post">
+        <label for="name">Receiver Account holder name: </label>
+        <input type="text" name="name" id="name"><br><br>
+        <label for="accid">Receiver Account ID: </label>
+        <input type="text" name="accid" id="accid"><br><br>
+        <label for="accno">Receiver Account no: </label>
+        <input type="text" name="accno" id="accno"><br><br>
+        <label for="amount">Amount to be transferred: </label>
+        <input type="text" name="amount" id="amount"><br><br><br>
+        <button type="submit" id="paybtn">PAY</button>
+    </form>
+</body>
+<script>
+    const btn = document.getElementById("paybtn");
+    btn.onclick = async (ev) => {
+        // ev.preventDefault();
+        const name = document.getElementById("name").value;
+        const accid = document.getElementById("accid").value;
+        const accno = document.getElementById("accno").value;
+        const amount = document.getElementById("amount").value;
+
+        const data = {
+            name, accid, accno, amount
+        }
+
+        const fetchRes = await fetch("http://localhost:5600/transact", {
+            'method' : 'POST',
+            'body' : JSON.stringify(data),
+            'headers' : {
+                'Content-Type' : 'application/json'
+            }
+        });
+
+    }
+</script>
+</html>
